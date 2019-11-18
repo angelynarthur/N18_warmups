@@ -13,6 +13,10 @@
 -- HINT: find a way to join the order_details, products, and customers tables
 
 
+SELECT customers.customer_id, customers.country, sum(order_details.unit_price * order_details.quantity) over (partition by order_details) as total_spending, rank () over (order by country) 
+FROM customers inner join orders on customers.customer_id = orders.customer_id 
+inner join order_details on order_details.order_id = orders.order_id inner join products on products.product_id = order_details.product_id;
+
 -- Return the same list as before, but with only the top 3 customers in each country.
 
 
